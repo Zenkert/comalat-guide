@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+
+    <!--  SakaiProxy -->
+    <bean id="org.sakaiproject.guide.logic.SakaiProxy"
+          class="org.sakaiproject.guide.logic.SakaiProxyImpl"
+          init-method="init">
+
+        <!-- API injection -->
+        <property name="securityService" ref="org.sakaiproject.authz.api.SecurityService"/>
+        <property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager"/>
+        <property name="toolManager" ref="org.sakaiproject.tool.api.ToolManager"/>
+        <property name="userDirectoryService" ref="org.sakaiproject.user.api.UserDirectoryService"/>
+        <property name="eventTrackingService" ref="org.sakaiproject.event.api.EventTrackingService"/>
+        <property name="serverConfigurationService" ref="org.sakaiproject.component.api.ServerConfigurationService"/>
+        <property name="siteService" ref="org.sakaiproject.site.api.SiteService"/>
+        <property name="authzGroupService" ref="org.sakaiproject.authz.api.AuthzGroupService"/>
+
+    </bean>
+
+
+    <!--  ComalatNotificationService -->
+    <bean id="org.sakaiproject.guide.logic.ComalatNotificationService"
+          class="org.sakaiproject.guide.logic.ComalatNotificationServiceImpl"
+          init-method="init" destroy-method="destroy">
+        <!-- API injection -->
+        <property name="eventTrackingService" ref="org.sakaiproject.event.api.EventTrackingService"/>
+        <property name="gradingLogic" ref="org.sakaiproject.guide.logic.GradingLogic"/>
+        <property name="projectLogic" ref="org.sakaiproject.guide.logic.ProjectLogic"/>
+        <property name="sakaiProxy" ref="org.sakaiproject.guide.logic.SakaiProxy"/>
+        <property name="comalatGroupAssignment" ref="org.sakaiproject.guide.logic.ComalatGroupAssignment"/>
+        <property name="comalatUtilities" ref="org.sakaiproject.guide.logic.ComalatUtilities"/>
+    </bean>
+
+    <!--  RecommendationLogic -->
+    <bean id="org.sakaiproject.guide.logic.RecommendationLogic"
+          class="org.sakaiproject.guide.logic.RecommendationLogicImpl"
+          init-method="init">
+        <!-- API injection -->
+        <property name="projectLogic" ref="org.sakaiproject.guide.logic.ProjectLogic"/>
+    </bean>
+
+    <!--  GradingLogic -->
+    <bean id="org.sakaiproject.guide.logic.GradingLogic"
+          class="org.sakaiproject.guide.logic.GradingLogicImpl"
+          init-method="init">
+        <!-- API injection -->
+        <property name="projectLogic" ref="org.sakaiproject.guide.logic.ProjectLogic"/>
+    </bean>
+
+    <!--  ComalatGroupAssignment -->
+    <bean id="org.sakaiproject.guide.logic.ComalatGroupAssignment"
+          class="org.sakaiproject.guide.logic.ComalatGroupAssignmentImpl"
+          init-method="init">
+        <!-- API injection -->
+        <property name="projectLogic" ref="org.sakaiproject.guide.logic.ProjectLogic"/>
+        <property name="gradingLogic" ref="org.sakaiproject.guide.logic.GradingLogic"/>
+        <property name="comalatUtilities" ref="org.sakaiproject.guide.logic.ComalatUtilities"/>
+        <property name="recommendationLogic" ref="org.sakaiproject.guide.logic.RecommendationLogic"/>
+        <property name="sakaiProxy" ref="org.sakaiproject.guide.logic.SakaiProxy"/>
+    </bean>
+
+
+
+
+    <!-- Add our HBM files to the Sakai global session factory -->
+    <bean id="org.sakaiproject.guide.hibernate.AdditionalHibernateMappings"
+          class="org.sakaiproject.springframework.orm.hibernate.impl.AdditionalHibernateMappingsImpl">
+        <property name="mappingResources">
+            <list>
+                <value>org/sakaiproject/guide/hbm/ComalatUser.hbm.xml</value>
+                <value>org/sakaiproject/guide/hbm/ComalatGroup.hbm.xml</value>
+                <value>org/sakaiproject/guide/hbm/ComalatAssessmentInformation.hbm.xml</value>
+                <value>org/sakaiproject/guide/hbm/ComalatAdditionalTestInformation.hbm.xml</value>
+                <value>org/sakaiproject/guide/hbm/ComalatGrade.hbm.xml</value>
+                <value>org/sakaiproject/guide/hbm/ComalatAchievement.hbm.xml</value>
+                <value>org/sakaiproject/guide/hbm/ComalatLTIContent.hbm.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- create a DAO bean, use the hibernate implementation -->
+    <bean id="org.sakaiproject.guide.dao.impl.ProjectDaoTarget"
+          class="org.sakaiproject.guide.dao.impl.ProjectDaoImpl" init-method="init">
+        <property name="sessionFactory">
+            <ref
+                    bean="org.sakaiproject.springframework.orm.hibernate.GlobalSessionFactory"/>
+        </property>
+        <property name="persistentClasses">
+            <list>
+                <value>org.sakaiproject.guide.model.ComalatUser</value>
+                <value>org.sakaiproject.guide.model.ComalatGroup</value>
+                <value>org.sakaiproject.guide.model.ComalatAdditionalTestInformation</value>
+                <value>org.sakaiproject.guide.model.ComalatAssessmentInformation</value>
+                <value>org.sakaiproject.guide.model.ComalatGrade</value>
+                <value>org.sakaiproject.guide.model.ComalatAchievement</value>
+                <value>org.sakaiproject.guide.model.ComalatLTIContent</value>
+                <value>org.sakaiproject.authoring.model.ComalatActivity</value>
+                <value>org.sakaiproject.authoring.model.ComalatAssessment</value>
+                <value>org.sakaiproject.authoring.model.ComalatFeedback</value>
+                <value>org.sakaiproject.authoring.model.ComalatGradeThreshold</value>
+                <value>org.sakaiproject.authoring.model.ComalatMetadata</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- This wraps our DAO so that the transactions are managed -->
+    <bean id="org.sakaiproject.guide.dao.ProjectDao"
+          class="org.sakaiproject.genericdao.springutil.CurrentClassLoaderTxProxyFactoryBean">
+        <property name="transactionManager"
+                  ref="org.sakaiproject.springframework.orm.hibernate.GlobalTransactionManager"/>
+        <property name="target"
+                  ref="org.sakaiproject.guide.dao.impl.ProjectDaoTarget"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="count*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- ProjectLogic -->
+    <bean id="org.sakaiproject.guide.logic.ProjectLogic"
+          class="org.sakaiproject.guide.logic.ProjectLogicImpl">
+        <property name="dao" ref="org.sakaiproject.guide.dao.ProjectDao"/>
+        <property name="sakaiProxy" ref="org.sakaiproject.guide.logic.SakaiProxy" />
+    </bean>
+
+    <!-- Cache: ttl=1 hour -->
+    <bean id="org.sakaiproject.guide.cache"
+          class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheManager">
+            <ref bean="org.sakaiproject.memory.api.MemoryService.cacheManager"/>
+        </property>
+        <property name="cacheName">
+            <value>org.sakaiproject.guide.cache</value>
+        </property>
+        <property name="maxElementsInMemory" value="1000"/>
+        <property name="diskPersistent" value="false"/>
+        <property name="eternal" value="false"/>
+        <property name="timeToLive" value="3600"/>
+        <property name="timeToIdle" value="3600"/>
+    </bean>
+    <bean id="org.sakaiproject.guide.logic.LessonBuilderProxy"
+          class="org.sakaiproject.guide.logic.LessonBuilderProxyImpl">
+        <property name="lessonBuilder" ref="org.sakaiproject.lessonbuildertool.LessonBuilderAccessAPI"></property>
+        <property name="dao" ref="org.sakaiproject.lessonbuildertool.model.SimplePageToolDao"></property>
+    </bean>
+    <bean id="org.sakaiproject.guide.logic.SamigoProxy"
+          class="org.sakaiproject.guide.logic.SamigoProxyImpl">
+        <property name="publishedAssessmentFacadeQueries">
+            <ref bean="PublishedAssessmentFacadeQueries"/>
+        </property>
+        <property name="memService">
+            <ref bean="org.sakaiproject.memory.api.MemoryService"/>
+        </property>
+        <property name="sakai">
+            <ref bean="org.sakaiproject.guide.logic.SakaiProxy"/>
+        </property>
+    </bean>
+
+    <bean id="org.sakaiproject.guide.logic.ComalatUtilities"
+          class="org.sakaiproject.guide.logic.ComalatUtilitiesImpl"
+          init-method="init">
+        <!-- API injection -->
+        <property name="sakaiProxy" ref="org.sakaiproject.guide.logic.SakaiProxy"/>
+    </bean>
+
+    <bean id="org.sakaiproject.guide.logic.StatisticalCompetenceAssessment"
+          class="org.sakaiproject.guide.logic.StatisticalCompetenceAssessmentImpl"
+    >
+        <property name="projectLogic" ref="org.sakaiproject.guide.logic.ProjectLogic"/>
+        <property name="sakaiProxy" ref="org.sakaiproject.guide.logic.SakaiProxy"/>
+    </bean>
+
+</beans>

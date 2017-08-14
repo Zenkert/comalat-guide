@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+
+<head>
+    <title>Lesson Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="/library/webjars/fontawesome/4.6.3/css/font-awesome.min.css">
+</head>
+
+<body>
+<wicket:extend>
+
+    <br/>
+    <div id="menu" wicket:id="menu"></div>
+    <form wicket:id="skipButton" style="float: right">
+        <input type="submit" value="Skip Activity"/>
+    </form>
+    <form wicket:id="unlockActivities" style="float: right">
+        <input type="submit" value="Unlock Activities"/>
+    </form>
+    <!--<div id="skipButton" wicket:id="skipButton" style="float: right; font-weight: bold; cursor:pointer">Skip Activity
+    </div>-->
+    <iframe wicket:id="frame" width="100%" frameBorder="0" scrolling="no" onload="iFrameResize()"></iframe>
+
+
+    <style type="text/css">
+
+        .ui-menu {
+            border: none;
+            width: auto;
+        }
+
+        .ui-menu .ui-menu {
+            padding: 5px;
+            margin: 3px 3px;
+            border: none;
+            background: none;
+            width: auto;
+            left: -0.7em !important;
+            top: 1.5em !important;
+        }
+
+        .ui-menu .ui-menu-item {
+            width: auto;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            font-family: "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+            font-size: 0.95em;
+            letter-spacing: 0.8px;
+            margin: 0.5em 0.5em 0.5em 0px;
+            padding: 0.2em 2.1em 0.25em;
+            text-decoration: none;
+            -moz-appearance: none;
+            background-size: 100% auto;
+            background-image: linear-gradient(#6edbb7, #63C9A8);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            transition: all 0.05s cubic-bezier(.25, .8, .25, 1);
+            border: .5px solid #6edbb7;
+            border-radius: 3px;
+        }
+
+        .ui-menu .ui-menu .ui-menu-item {
+            width: auto;
+            color: #fff;
+            cursor: pointer;
+            border: .5px solid #6edbb7;
+            border-radius: 3px;
+            white-space: nowrap;
+            display: block;
+            font-family: "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+            font-size: 0.95em;
+            letter-spacing: 0.8px;
+            margin: 0.5em 0.5em 0.5em 0px;
+            padding: 0.2em 2.1em 0.25em;
+            text-decoration: none;
+            -moz-appearance: none;
+            background-size: 100% auto;
+            background-image: linear-gradient(#6edbb7, #63C9A8);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            transition: all 0.05s cubic-bezier(.25, .8, .25, 1);
+        }
+
+        .ui-menu .ui-menu-item:hover {
+            background-image: linear-gradient(#81efcb, #66ddbb);
+            box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.35);
+        }
+
+        .ui-menu .ui-icon {
+            margin: 0.25em;
+        }
+    </style>
+</wicket:extend>
+</body>
+</html>

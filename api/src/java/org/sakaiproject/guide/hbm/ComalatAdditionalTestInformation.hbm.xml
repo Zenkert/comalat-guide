@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="org.sakaiproject.guide.model.ComalatAdditionalTestInformation" table="GB_GRADE_RECORD_T">
+        <id name="id" column="ID" type="int" unsaved-value="0">
+            <generator class="native"/>
+        </id>
+        <property name="gradableObjectId" type="int">
+            <column name="GRADABLE_OBJECT_ID"/>
+        </property>
+
+        <property name="userId" type="string">
+            <column name="STUDENT_ID" length="255"/>
+        </property>
+
+        <property name="pointsEarned" type="double">
+            <column name="POINTS_EARNED"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" >
+
+
+<body>
+<wicket:extend>
+    <br />
+    <h3><wicket:message key="progress_page.header.my_progress" /></h3>
+    <br />
+
+    <div max-width="100%" wicket:id="columnChart1"/>
+
+    <br />
+    <div max-width="100%" wicket:id="pieChart1" />
+
+    <br />
+    <div max-width="100%" wicket:id="columnChart2" />
+
+    <br />
+    <div max-width="100%" wicket:id="barChart1" />
+
+    <br />
+    <div max-width="100%" wicket:id="barChart2" />
+
+    <br />
+
+
+
+    <!-- note that the link below has it's i18n message directly embedded in the html, no Java required. -->
+    <!--<a wicket:id="toThirdPageLink"><wicket:message key="goto.page.three" /></a>
+    <br>
+    -->
+    <a wicket:id="archetypalAnalysisLink"><wicket:message key="progress_page.link.archetypalAnalysisLink" /></a>
+
+</wicket:extend>
+</body>
+</html>

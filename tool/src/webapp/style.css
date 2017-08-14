@@ -1,0 +1,88 @@
+body {
+    color: white;
+    font-family: 'Droid Sans', 'Helvetica', 'sans';
+    font-size: 80%;
+    /*margin: 2ex 2em;*/
+}
+
+h1, h2, h3, h4 {
+    color: #2a94c0;
+}
+
+a {
+    color: #6F6F6F;
+    text-decoration: underline;
+}
+
+div#datetime {
+    font-size: 80%;
+    color: #2a94c0;
+    text-align: left;
+}
+
+table {
+    min-width: 250px;
+    max-width: 100%;
+    max-width: 500px;
+    height: 240px;
+    background-color: #f5feff;
+    float: left;
+    border: .5px solid #6edbb7;
+    border-spacing: 0;
+    border-radius: 5px;
+    text-align: left;
+    margin: 0 10px 10px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+th {
+    text-align: left;
+    font-size: 18pt;
+    color: #2a94c0;
+    padding: 15px 10px 10px 10px;
+    height: 50px;
+    box-shadow: 0 .5px 4px rgba(0, 0, 0, 0.12)
+}
+
+td {
+    text-align: center;
+    font-size: 13pt;
+    color: #2a94c0;
+    padding: 0 10px 0 10px;
+    background-clip: padding-box;
+    border-radius: 1px;
+    border: .5px solid rgba(115, 217, 178, 0.36);
+}
+
+div.wicketstuff-progressbar span.bar {
+    display: block;
+    height: 100%;
+    position: absolute;
+    background-color: #6edbb7;
+    background-position: top right;
+    border-right: 1px solid #6edbb7;
+    background-image: linear-gradient(#6edbb7, #63C9A8);
+}
+
+div.wicketstuff-progressbar {
+    width: 100%;
+    background-image: linear-gradient(#afafaf, #808080);
+}
+
+.customButton {
+    height: 60px;
+    text-align: center;
+    background-color: #6edbb7;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 13pt;
+    font-weight: 500;
+    background-image: linear-gradient(#6edbb7, #62bfa0);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.customButton:hover {
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+}

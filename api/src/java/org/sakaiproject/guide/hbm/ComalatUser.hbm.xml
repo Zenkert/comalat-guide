@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="org.sakaiproject.guide.model.ComalatUser" table="comalat_user">
+        <!-- create the primary key id -->
+        <!-- create the primary key id, using native is typically the best way
+            to do this -->
+        <id name="comalatUserId" type="long" column="COMALAT_USER_ID">
+            <generator class="native">
+                <param name="sequence">COMALAT_USER_ID_SEQ</param>
+            </generator>
+        </id>
+
+        <property name="currentMaxLesson" type="long" not-null="true">
+            <column name="CURRENT_MAX_LESSON"/>
+        </property>
+
+        <property name="sakaiUserId" type="string" not-null="true">
+            <column name="SAKAI_USER_ID" length="255"/>
+        </property>
+
+        <property name="specialization" type="string">
+            <column name="SPECIALIZATION" length="255"/>
+        </property>
+
+        <property name="language" type="string">
+            <column name="LANGUAGE" length="255"/>
+        </property>
+
+        <property name="difficulty" type="string">
+            <column name="DIFFICULTY" length="255"/>
+        </property>
+
+        <property name="gender" type="string">
+            <column name="GENDER" length="255"/>
+        </property>
+
+        <property name="age" type="int">
+            <column name="AGE"/>
+        </property>
+
+        <property name="educationLevel" type="string">
+            <column name="EDUCATION_LEVEL" length="255"/>
+        </property>
+
+        <property name="instructionLanguage" type="string">
+            <column name="INSTRUCTION_LANGUAGE" length="255"/>
+        </property>
+
+        <property name="currentOccupation" type="string">
+            <column name="CURRENT_OCCUPATION" length="255"/>
+        </property>
+
+        <property name="targetOccupation" type="string">
+            <column name="TARGET_OCCUPATION" length="255"/>
+        </property>
+
+        <property name="targetPlaceOfResidence" type="string">
+            <column name="TARGET_PLACE_OF_RESIDENCE" length="255"/>
+        </property>
+
+        <set name="groups" table="comalat_group_info"
+             inverse="false" lazy="true" fetch="select" cascade="all">
+            <key>
+                <column name="COMALAT_USER_ID" not-null="true"/>
+            </key>
+            <many-to-many entity-name="org.sakaiproject.guide.model.ComalatGroup">
+                <column name="COMALAT_GROUP_ID" not-null="true"/>
+            </many-to-many>
+        </set>
+
+        <set name="achievements" table="comalat_achievement" lazy="false" cascade="all">
+            <key column="COMALAT_USER_ID"/>
+            <one-to-many class="org.sakaiproject.guide.model.ComalatAchievement"/>
+        </set>
+
+        <property name="recommendedActivities" type="string">
+            <column name="RECOMMENDED_ACTIVITIES" length="5000"/>
+        </property>
+
+    </class>
+</hibernate-mapping>

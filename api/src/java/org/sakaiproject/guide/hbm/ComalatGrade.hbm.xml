@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="org.sakaiproject.guide.model.ComalatGrade" table="comalat_grading">
+        <!-- create the primary key id -->
+        <!-- create the primary key id, using native is typically the best way
+            to do this -->
+        <id name="comalatGradingId" type="long" column="COMALAT_GRADING_ID">
+            <generator class="native">
+                <param name="sequence">COMALAT_GRADING_ID_SEQ</param>
+            </generator>
+        </id>
+
+        <property name="comalatId" type="string">
+            <column name="COMALAT_ID" length="255"/>
+        </property>
+
+        <property name="pubAssessmentId" type="string">
+            <column name="PUB_ASSESSMENT_ID" length="255"/>
+        </property>
+
+        <property name="assessmentName" type="string">
+            <column name="ASSESSMENT_NAME" length="255"/>
+        </property>
+
+        <property name="sectionName" type="string">
+            <column name="SECTION_NAME" length="255"/>
+        </property>
+
+        <property name="competence" type="string">
+            <column name="COMPETENCE" length="255"/>
+        </property>
+
+        <property name="userId" type="string">
+            <column name="USER_ID" length="255"/>
+        </property>
+
+        <property name="pointsEarned" type="double">
+            <column name="POINTS_EARNED"/>
+        </property>
+
+        <property name="maximumPoints" type="double">
+            <column name="POINTS_MAXIMUM"/>
+        </property>
+
+        <property name="percentage" type="double">
+            <column name="GRADE_IN_PERCENT"/>
+        </property>
+
+        <property name="date" type="timestamp">
+            <column name="DATE" length="20"/>
+        </property>
+
+        <property name="decisionPoint" type="boolean">
+            <column name="DECISION_POINT"/>
+        </property>
+
+        <property name="nonAssessed" type="boolean">
+            <column name="NON_ASSESSED"/>
+        </property>
+
+        <property name="weighting" type="string">
+            <column name="WEIGHTING" length="20"/>
+        </property>
+
+        <property name="fuzzyPercentage" type="double">
+            <column name="FUZZY_PERCENT"/>
+        </property>
+
+        <property name="averagePercentage" type="double">
+            <column name="AVERAGE_PERCENT"/>
+        </property>
+
+        <property name="successful" type="boolean">
+            <column name="SUCCESSFUL"/>
+        </property>
+
+        <property name="finalTest" type="boolean">
+            <column name="FINAL_TEST"/>
+        </property>
+
+        <property name="fuzzyPercentageSet" type="boolean">
+            <column name="FUZZY_PERCENT_SET"/>
+        </property>
+
+        <property name="subItemOfFinalTest" type="boolean">
+            <column name="SUB_ITEM_OF_FINAL_TEST"/>
+        </property>
+
+        <property name="parentAssessmentId" type="string">
+            <column name="PARENT_ASSESSMENT_ID" length="20"/>
+        </property>
+
+        <property name="correctChoices" type="string">
+            <column name="CORRECT_CHOICES" length="5000"/>
+        </property>
+
+        <property name="userChoices" type="string">
+            <column name="USER_CHOICES" length="5000"/>
+        </property>
+
+        <property name="skipped" type="boolean">
+            <column name="SKIPPED"/>
+        </property>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+
+<script type="text/javascript" src="/comalat-tool/script/iframe-resizer/js/iframeResizer.contentWindow.min.js"></script>
+
+<head>
+    <title>Welcome Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="/library/webjars/fontawesome/4.6.3/css/font-awesome.min.css">
+</head>
+
+<body>
+<h1 wicket:id="title" id="title">Welcome</h1>
+<br>
+
+<table>
+    <tr>
+        <th colspan="4">
+            <span class="fa fa-tasks" style="padding: 0 20px 0 20px" aria-hidden="true"></span>
+            <span wicket:id="recentActivitiesTitle">Recent Activities</span>
+        </th>
+    </tr>
+    <tr wicket:id="activityRows">
+        <td wicket:id="col1" style="font-size: 9pt">Activity</td>
+        <td wicket:id="col2" style="font-size: 9pt">Percentage</td>
+        <td wicket:id="col3" style="font-size: 9pt; text-decoration: underline; cursor: pointer;">Time</td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <th>
+            <span class="fa fa-line-chart" style="padding: 0 20px 0 20px" aria-hidden="true"></span>
+            <span wicket:id="progressTitle">Progress</span>
+        </th>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <span wicket:id="progressLesson">LXX</span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <span wicket:id="bar">[::::::Progress-Bar::::::]</span>
+        </td>
+    </tr>
+    <tr>
+        <td wicket:id="progressButton" class="customButton">View Progress</td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <th>
+            <span class="fa fa-thumbs-o-up" style="padding: 0 20px 0 20px" aria-hidden="true"></span>
+            <span wicket:id="recommendationTitle">Recommendation</span>
+        </th>
+    </tr>
+    <tr>
+        <td wicket:id="recommendation">Lesson X</td>
+    </tr>
+    <tr>
+        <td wicket:id="recommendationButton" class="customButton">Start Learning</td>
+    </tr>
+</table>
+
+<br>
+</body>
+
+<style>
+</style>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+
+<script type="text/javascript" src="/comalat-tool/script/iframe-resizer/js/iframeResizer.contentWindow.min.js"></script>
+
+<head>
+    <title>Skipped activities</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="/library/webjars/fontawesome/4.6.3/css/font-awesome.min.css">
+</head>
+
+<body>
+<h1 wicket:id="title" id="title">Skipped activities</h1>
+<br>
+
+<table>
+    <tr>
+        <th colspan="2">
+            <span class="fa fa-bar-chart" style="padding: 0 20px 0 20px" aria-hidden="true"></span>
+            <span wicket:id="skippedTitle">Skipped activities</span>
+        </th>
+    </tr>
+    <tr wicket:id="skippedRows">
+        <td wicket:id="col1" style="text-align: right; width: 50%">Activity</td>
+    </tr>
+</table>
+
+<br>
+</body>
+
+<style>
+    td {
+        font-size: 11pt;
+    }
+</style>
+
+</html>

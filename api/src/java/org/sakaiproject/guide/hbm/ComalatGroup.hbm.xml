@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="org.sakaiproject.guide.model.ComalatGroup" table="comalat_group">
+		<!-- create the primary key id -->
+		<!-- create the primary key id, using native is typically the best way 
+			to do this -->
+		<id name="comalatGroupId" type="long" column="COMALAT_GROUP_ID">
+			<generator class="native">
+				<param name="sequence">COMALAT_GROUP_ID_SEQ</param>
+			</generator>
+		</id>
+
+		<set name="comalatUsers" table="comalat_group_info" inverse="true" lazy="true"
+			 fetch="select">
+			<key>
+				<column name="COMALAT_GROUP_ID" not-null="true"/>
+			</key>
+			<many-to-many entity-name="org.sakaiproject.guide.model.ComalatUser">
+				<column name="COMALAT_USER_ID" not-null="true"/>
+			</many-to-many>
+		</set>
+
+		<property name="comalatGroupIdentifier" type="string" not-null="true">
+			<column name="COMALAT_GROUP_IDENTIFIER" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+
+<script type="text/javascript" src="/comalat-tool/script/iframe-resizer/js/iframeResizer.contentWindow.min.js"></script>
+
+<head>
+    <title>Record Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="/library/webjars/fontawesome/4.6.3/css/font-awesome.min.css">
+</head>
+
+<body>
+<h1 wicket:id="title" id="title" style="display: block">Record</h1>
+
+<div wicket:id="backButton" class="customButton"
+     style="width: 200px; height: 50px; vertical-align: middle; line-height: 50px; border-radius: 8px"></div>
+<br>
+
+<table style="float: left">
+    <tr>
+        <th>
+            <span class="fa fa-file-text" style="padding: 0 20px 0 20px" aria-hidden="true"></span>
+            <span wicket:id="resultTitle">Result</span>
+        </th>
+    </tr>
+    <tr>
+        <td wicket:id="name">Test Name</td>
+    </tr>
+    <tr>
+        <td wicket:id="subsection">Subsection X</td>
+    </tr>
+    <tr>
+        <td wicket:id="score">Score</td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <th colspan="2">
+            <span class="fa fa-bar-chart" style="padding: 0 20px 0 20px" aria-hidden="true"></span>
+            <span wicket:id="evaluationTitle">Evaluation</span>
+        </th>
+    </tr>
+    <tr wicket:id="evaluationRows">
+        <td wicket:id="col1" style="text-align: left; width: 50%">User Choice</td>
+        <td wicket:id="col2" style="text-align: right; width: 50%">Correct Result</td>
+    </tr>
+</table>
+
+<br>
+</body>
+
+<style>
+    td {
+        font-size: 11pt;
+    }
+</style>
+
+</html>

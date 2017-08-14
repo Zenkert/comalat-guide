@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="/library/webjars/fontawesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body>
+<wicket:extend>
+    <br/>
+    <h3><wicket:message key="profile.ph31.myProfile"></wicket:message></h3>
+    <br/>
+    <h4><wicket:message key="profile.ph4.myLearningObjectives"></wicket:message></h4>
+    <br/>
+    <form wicket:id="form">
+
+        <label><wicket:message key="profile.pl1.desiredLanguage"></wicket:message></label>
+        <br/>
+        <span wicket:id="language"></span>
+        <br/><br/>
+
+        <label><wicket:message key="profile.pl2.desiredDifficultyLevel"></wicket:message></label>
+        <br/>
+        <select wicket:id="difficulties"></select>
+        <br/><br/>
+        <div wicket:id="cont1">
+            <b>
+                <span wicket:id="specializationsLabel"></span>
+            </b>
+            <br/>
+            <select wicket:id="specializations"></select>
+            <br/>
+        </div>
+        <br/>
+        <label><wicket:message key="profile.pl3.instructionsLanguage"></wicket:message></label>
+        <br/>
+        <select wicket:id="instructionLanguage"></select>
+        <br/>
+        <hr/>
+
+        <br/>
+        <h4><wicket:message key="profile.ph4.myPersonalInformation"></wicket:message></h4>
+        <br/>
+        <label><wicket:message key="profile.pl4.gender" /></label>
+        <br/>
+        <select wicket:id="gender"></select>
+        <br/>
+        <label><wicket:message key="profile.pl5.age"/></label>
+        <br/>
+        <input wicket:id="age" type="number" size="5"/>
+        <br/>
+        <label><wicket:message key="profile.pl6.educationLevel" />"</label>
+        <br/>
+        <select wicket:id="educationLevel"></select>
+        <br/>
+
+
+
+        <label><wicket:message key="profile.pl7.currentOccupation" /></label>
+        <br/>
+        <select wicket:id="currentOccupation"></select>
+        <br/>
+        <label><wicket:message key="profile.pl8.targetOccupation" /></label>
+        <br/>
+        <select wicket:id="targetOccupation"></select>
+        <br/>
+        <label><wicket:message key="profile.pl9.targetPlaceOfResidence" /></label>
+        <br/>
+        <select wicket:id="targetPlaceOfResidence"></select>
+
+        <br/>
+        <input type="submit" wicket:message="value:profile.submit.updatePreferences" />
+    </form>
+
+    <form wicket:id="formDebug">
+        <input type="submit" value="DEBUG: Add_to_all_groups"/>
+    </form>
+
+    <form wicket:id="formDebug2">
+        <input type="submit" value="DEBUG: Add_to_all_normal_groups"/>
+    </form>
+
+    <style type="text/css">
+        /* style the Wicket FeedbackPanel to remove the list */
+        .alertMessage ul, .success ul {
+            list-style-type: none !important;
+            margin-left: 0px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+        }
+    </style>
+
+</wicket:extend>
+</body>
+</html>
