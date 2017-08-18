@@ -8,6 +8,7 @@ import org.sakaiproject.guide.logic.SakaiProxy;
 import org.sakaiproject.guide.model.ComalatGrade;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PageTools {
@@ -56,9 +57,19 @@ public class PageTools {
     private static ArrayList<String[]> getNormalTestResultInformation(ComalatGrade comalatGrade) {
         ArrayList<String[]> result = new ArrayList<>();
         try {
-            String[] userChoices = comalatGrade.getUserChoices().split(";");
-            String[] correctChoices = comalatGrade.getCorrectChoices().split(";");
-
+            String[] userChoices;
+            if (comalatGrade.getUserChoices() == null) {
+                userChoices = new String[0];
+            } else {
+                userChoices = comalatGrade.getUserChoices().split(";");
+            }
+            String[] correctChoices;
+            if (comalatGrade.getCorrectChoices() == null) {
+                correctChoices = new String[userChoices.length];
+                Arrays.fill(correctChoices, "N/A");
+            } else {
+                correctChoices = comalatGrade.getCorrectChoices().split(";");
+            }
             if (comalatGrade.getParentAssessmentId() != null && !comalatGrade.getParentAssessmentId().isEmpty()) {
                 String[] itemName = {comalatGrade.getAssessmentName(), comalatGrade.getAssessmentName()};
                 result.add(itemName);

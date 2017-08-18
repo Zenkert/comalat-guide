@@ -146,7 +146,6 @@ public class TaoResultsImpl {
             urlConnection.addRequestProperty("Authorization", auth);
             urlConnection.addRequestProperty("Accept", "application/json");
             urlConnection.addRequestProperty("URI", deliveryExecutionId);
-            log.info("TAOTAOTAO " + taoRestServer + " " + taoRestUser + " " + taoRestPass);
             String keyString = "";
             if (urlConnection.getResponseCode() == 200) {
                 log.info("TAOTAOTAO CONNECTION 200");
@@ -195,6 +194,7 @@ public class TaoResultsImpl {
                             }
                         }
                         if (responseTempList.size() > correctResponseTemp.size()) {
+                            log.info("TAOTAOTAO Trim result sizes");
                             responseTempList = trimSize(responseTempList, correctResponseTemp);
                         }
                         response.put(keyString, responseTempList.toArray(new String[0]));
@@ -212,6 +212,7 @@ public class TaoResultsImpl {
         }
         //code for choice mappings, to replpace placeholders with their correct values
         Iterator it = choiceMapping.entrySet().iterator();
+        log.info("TAOTAOTAO Map choices");
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             //get the placeholders in responses that have to be replaced
@@ -243,6 +244,7 @@ public class TaoResultsImpl {
 
         // build the results to exercises and return them to be saved with the comalat grade
         it = name.entrySet().iterator();
+        log.info("TAOTAOTAO Build tao exercise");
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             TaoExercise te = new TaoExercise((String) pair.getValue());
@@ -272,17 +274,21 @@ public class TaoResultsImpl {
      * @return the trimmed size of results
      */
     private ArrayList<String> trimSize(ArrayList<String> result, ArrayList<String> source) {
+        boolean modified = false;
         if (result.size() > source.size()) {
             for (int i = 0; i < result.size(); i++) {
                 if (result.get(i).isEmpty()) {
                     result.remove(result.get(i));
+                    modified = true;
                     break;
                 }
             }
         } else {
             return result;
         }
-        result = trimSize(result, source);
+        if (modified) {
+            result = trimSize(result, source);
+        }
         return result;
     }
 }

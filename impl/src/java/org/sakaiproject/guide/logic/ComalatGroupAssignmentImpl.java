@@ -150,16 +150,32 @@ public class ComalatGroupAssignmentImpl implements ComalatGroupAssignment {
         if (gradingLogic.getComalatGrade(studentId).isDecisionPoint() || !activity) {
             if (gradingLogic.getComalatGrade(studentId).retrieveAppropriatePercentage() >= gradingFuzzyPercentage) {
                 if (!activity) {
-                    recommendedGroups = comalatAssessment.getNextStep().split(",");
+                    try {
+                        recommendedGroups = comalatAssessment.getNextStep().split(",");
+                    } catch (NullPointerException e) {
+                        recommendedGroups = null;
+                    }
                 } else {
-                    recommendedGroups = comalatActivity.getNextStep().split(",");
+                    try {
+                        recommendedGroups = comalatActivity.getNextStep().split(",");
+                    } catch (NullPointerException e) {
+                        recommendedGroups = null;
+                    }
                 }
                 gradingLogic.getComalatGrade(studentId).setSuccessful(true);
             } else {
                 if (!activity) {
-                    recommendedGroups = comalatAssessment.getAssignedGroupFail().split(",");
+                    try {
+                        recommendedGroups = comalatAssessment.getAssignedGroupFail().split(",");
+                    } catch (NullPointerException e) {
+                        recommendedGroups = null;
+                    }
                 } else {
-                    recommendedGroups = comalatActivity.getAssignedGroupFail().split(",");
+                    try {
+                        recommendedGroups = comalatActivity.getAssignedGroupFail().split(",");
+                    } catch (NullPointerException e) {
+                        recommendedGroups = null;
+                    }
                 }
                 gradingLogic.getComalatGrade(studentId).setSuccessful(false);
             }
@@ -194,9 +210,9 @@ public class ComalatGroupAssignmentImpl implements ComalatGroupAssignment {
     /**
      * check if the completed group is assigned to a user
      *
-     * @param studentId    - String
+     * @param studentId          - String
      * @param existingSiteGroups - collection of groups
-     * @param groupName - name of the group to check
+     * @param groupName          - name of the group to check
      * @return true if assigned, false otherwise
      */
     private boolean isGroupCompleted(String studentId, Collection<Group> existingSiteGroups, String groupName) {
