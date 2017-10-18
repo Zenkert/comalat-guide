@@ -596,14 +596,11 @@ public class ProjectLogicImpl implements ProjectLogic {
         grades = grades.stream().filter(g -> g.getComalatId().split("-")[0].equals(siteLanguage) &&
                 g.getComalatId().split("-")[2].equals(path) &&
                 g.getComalatId().split("-")[3].equals(competence) &&
-                g.getComalatId().split("-")[5].equals(metadata) &&
                 g.isSuccessful())
                 .collect(Collectors.toList());
 
         List<ComalatActivity> allActivities = getComalatActivities(siteLanguage).stream().
-                filter(a -> a.getCompetence().equals(competence) &&
-                        a.getMetadataTag().equals(metadata) &&
-                        a.getPath().equals("N"))
+                filter(a -> a.getCompetence().equals(competence) && a.getPath().equals("N"))
                 .collect(Collectors.toList());
 
         // Discard duplications

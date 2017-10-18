@@ -11,6 +11,7 @@ import com.googlecode.wickedcharts.highcharts.options.series.Point;
 import com.googlecode.wickedcharts.highcharts.options.series.PointSeries;
 import com.googlecode.wickedcharts.highcharts.options.series.SimpleSeries;
 import com.googlecode.wickedcharts.wicket6.highcharts.Chart;
+import org.apache.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.ResourceModel;
@@ -20,6 +21,7 @@ import org.sakaiproject.util.ResourceLoader;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +39,7 @@ public class ProgressPage extends BasePage {
 	public static final String READING_COLOR_CODE="#A0F0FF";
 	public static final String LISTENING_COLOR_CODE="#FFFF88";
 	public static final String LSP_COLOR_CODE="#C0C0C0";
+	private final static Logger log = Logger.getLogger(ProgressPage.class);
 
 	private transient ResourceLoader rl = new ResourceLoader( "org.sakaiproject.guide.tool.MyApplication" );
 
@@ -87,7 +90,7 @@ public class ProgressPage extends BasePage {
 
 		double gcountp = totalCount!=0?scaleValue(gcount/(double)totalCount):0;
 		double vcountp = totalCount!=0?scaleValue(vcount/(double)totalCount):0;
-		double rcountp = totalCount!=0?scaleValue(vcount/(double)totalCount):0;
+		double rcountp = totalCount!=0?scaleValue(rcount/(double)totalCount):0;
 		double lcountp = totalCount!=0?scaleValue(lcount/(double)totalCount):0;
 
 		double gavg = g.getAverage();
@@ -212,7 +215,7 @@ public class ProgressPage extends BasePage {
 
 		pieChart.setTooltip(new Tooltip()
 				.setFormatter(new PercentageFormatter())
-				.setPercentageDecimals(2));
+				.setPercentageDecimals(0));
 
 		pieChart.setPlotOptions(new PlotOptionsChoice()
 				.setPie(new PlotOptions()
@@ -227,10 +230,10 @@ public class ProgressPage extends BasePage {
 		pieChart.addSeries(new PointSeries()
 				.setType(SeriesType.PIE)
 				.setName(rl.getString("progress_page.message8"))
-				.addPoint(new Point(rl.getString("progress_page.grammar"), gcountp).setColor(new HexColor(GRAMMAR_COLOR_CODE)))
-				.addPoint(new Point(rl.getString("progress_page.vocabulary"), vcountp).setColor(new HexColor(VOCABULARY_COLOR_CODE)))
-				.addPoint(new Point(rl.getString("progress_page.reading"), rcountp).setColor(new HexColor(READING_COLOR_CODE)))
-				.addPoint(new Point(rl.getString("progress_page.listening"), lcountp).setColor(new HexColor(LISTENING_COLOR_CODE))));
+				.addPoint(new Point(rl.getString("progress_page.grammar"), round(gcountp,2)).setColor(new HexColor(GRAMMAR_COLOR_CODE)))
+				.addPoint(new Point(rl.getString("progress_page.vocabulary"), round(vcountp,2)).setColor(new HexColor(VOCABULARY_COLOR_CODE)))
+				.addPoint(new Point(rl.getString("progress_page.reading"), round(rcountp,2)).setColor(new HexColor(READING_COLOR_CODE)))
+				.addPoint(new Point(rl.getString("progress_page.listening"), round(lcountp,2)).setColor(new HexColor(LISTENING_COLOR_CODE))));
 		add(new Chart("pieChart1", pieChart));
 
 
@@ -339,6 +342,9 @@ public class ProgressPage extends BasePage {
 		List<String> categories = new ArrayList<>();
 		List<Number> averages = new ArrayList<>();
 		for (ComalatMetadata meta : metadata) {
+			if (meta.getMetadataTag().equals("V") | meta.getMetadataTag().equals("G")| meta.getMetadataTag().equals("R")| meta.getMetadataTag().equals("L")){
+				continue;
+			}
 			UserGradingAverageData dataItem = projectLogic.getAssessedAvgByUserIdAndMetadata(
 					userId,language,meta.getMetadataTag());
 			if (dataItem.getCount()!=0) {
@@ -479,162 +485,17 @@ public class ProgressPage extends BasePage {
 		value *= 100;
 		BigDecimal bigDecimal = new BigDecimal(value);
 		BigDecimal roundedWithScale = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP);
-		double scaled = roundedWithScale.doubleValue();
+		double scaled = round(roundedWithScale.doubleValue(), 2);
+		log.info("value: " + scaled);
 		return scaled;
 	}
 
-	/**
-	 * Helper data structure to store usage data of a browser.
-	 */
-	public class BrowserUsageData {
+	public static double round(double value, int places) {
+		if (places < 0) throw new IllegalArgumentException();
 
-		private static final long serialVersionUID = 1L;
-
-		private String browserName;
-
-		private Float marketShare;
-
-		private ColorReference color;
-
-		private List<VersionUsageData> versionUsageData = new ArrayList<VersionUsageData>();
-
-		public String getBrowserName() {
-			return this.browserName;
-		}
-
-		public ColorReference getColor() {
-			return this.color;
-		}
-
-		public Float getMarketShare() {
-			return this.marketShare;
-		}
-
-		public List<VersionUsageData> getVersionUsageData() {
-			return this.versionUsageData;
-		}
-
-		public void setBrowserName(final String browserName) {
-			this.browserName = browserName;
-		}
-
-		public void setColor(final ColorReference color) {
-			this.color = color;
-		}
-
-		public void setMarketShare(final Float marketShare) {
-			this.marketShare = marketShare;
-		}
-
-		public void setVersionUsageData(final List<VersionUsageData> versionUsageData) {
-			this.versionUsageData = versionUsageData;
-		}
+		long factor = (long) Math.pow(10, places);
+		value = value * factor;
+		long tmp = Math.round(value);
+		return (double) tmp / factor;
 	}
-
-	/**
-	 * Helper data structure to store usage data of a browser version.
-	 */
-	public class VersionUsageData {
-
-		private final String name;
-
-		private final Float marketShare;
-
-		private final ColorReference color;
-
-		public VersionUsageData(final String name, final Float marketShare, final ColorReference color) {
-			this.name = name;
-			this.marketShare = marketShare;
-			this.color = color;
-		}
-
-		public ColorReference getColor() {
-			return this.color;
-		}
-
-		public Float getMarketShare() {
-			return this.marketShare;
-		}
-
-		public String getName() {
-			return this.name;
-		}
-	}
-
-
-
-
-
-	/**
-	 * Creates the data displayed in the donut chart.
-	 */
-	private List<BrowserUsageData> getBrowserData() {
-		List<BrowserUsageData> browserData = new ArrayList<BrowserUsageData>();
-		browserData.add(getMSIEUsageData());
-		browserData.add(getOperaUsageData());
-		return browserData;
-	}
-
-	/**
-	 * Creates the Internet Explorer data.
-	 */
-	private BrowserUsageData getMSIEUsageData() {
-		BrowserUsageData data = new BrowserUsageData();
-		data.setBrowserName("MSIE");
-		data.setMarketShare(55.11f);
-		ColorReference ieColor = new HighchartsColor(0);
-		data.setColor(ieColor);
-		data.getVersionUsageData().add(new VersionUsageData("Vocabulary", 10.85f, ieColor.brighten(0.1f)));
-		data.getVersionUsageData().add(new VersionUsageData("Writing", 7.35f, ieColor.brighten(0.2f)));
-		data.getVersionUsageData().add(new VersionUsageData("Listening", 33.06f, ieColor.brighten(0.3f)));
-		data.getVersionUsageData().add(new VersionUsageData("Reading", 2.81f, ieColor.brighten(0.4f)));
-		return data;
-	}
-
-	/**
-	 * Creates the Opera data.
-	 */
-	private BrowserUsageData getOperaUsageData() {
-		BrowserUsageData data = new BrowserUsageData();
-		data.setBrowserName("Opera");
-		data.setMarketShare(2.14f);
-		ColorReference operaColor = new HighchartsColor(4);
-		data.setColor(operaColor);
-		data.getVersionUsageData()
-				.add(new VersionUsageData("Language for specific purposes", 10.12f, operaColor.brighten(0.1f)));
-		data.getVersionUsageData().add(new VersionUsageData("Oral Production", 30.37f, operaColor.brighten(0.2f)));
-		data.getVersionUsageData().add(new VersionUsageData("Oral Interaction", 51.65f, operaColor.brighten(0.3f)));
-		return data;
-	}
-
-	/**
-	 * Converts a list of {@link BrowserUsageData} into a list of
-	 * {@link PointSeries} containing the data about the browsers.
-	 */
-	private PointSeries toBrowserSeries(final List<BrowserUsageData> browserUsage) {
-		PointSeries browserSeries = new PointSeries();
-		for (BrowserUsageData browserData : browserUsage) {
-			browserSeries.addPoint(
-					new Point(browserData.getBrowserName(), browserData.getMarketShare(), browserData.getColor()));
-		}
-		return browserSeries;
-	}
-
-	/**
-	 * Converts a list of {@link BrowserUsageData} into a list of
-	 * {@link PointSeries} containing the data about the browser versions.
-	 */
-	private PointSeries toVersionSeries(final List<BrowserUsageData> browserUsage) {
-		PointSeries versionSeries = new PointSeries();
-		for (BrowserUsageData browserData : browserUsage) {
-			for (VersionUsageData versionData : browserData.getVersionUsageData()) {
-				versionSeries.addPoint(
-						new Point(versionData.getName(), versionData.getMarketShare(), versionData.getColor()));
-			}
-		}
-		return versionSeries;
-	}
-
-
-
 }

@@ -281,6 +281,7 @@ public class ProfilePage extends BasePage {
                         //remove user from this group if already registered
                         else if ("Arabic".equals(groupTitle) ||
                                 "English".equals(groupTitle) ||
+                                "Kurdish".equals(groupTitle) ||
                                 "German".equals(groupTitle) ||
                                 "Spanish".equals(groupTitle) ||
                                 "Health".equals(groupTitle) ||
@@ -361,6 +362,7 @@ public class ProfilePage extends BasePage {
         languages.add(rl.getString("profile.instructionLanguage.english"));
         languages.add(rl.getString("profile.instructionLanguage.spanish"));
         languages.add(rl.getString("profile.instructionLanguage.arabic"));
+        languages.add(rl.getString("profile.instructionLanguage.kurdish"));
         /*List<String> languages = new ArrayList<>();
         String[] languageCodes = Locale.getISOLanguages();
 		for (String code : languageCodes) {
@@ -458,56 +460,62 @@ public class ProfilePage extends BasePage {
      * @return The corresponding Enlish term
      */
     private String propertyToEnglish(String prop) {
-        if (prop.equals(rl.getString("profile.listDifficulties.beginner")))
+        if (prop!=null) {
+            if (prop.equals(rl.getString("profile.listDifficulties.beginner")))
                 return "Beginner";
-        else if (prop.equals(rl.getString("profile.listDifficulties.intermediate")))
+            else if (prop.equals(rl.getString("profile.listDifficulties.intermediate")))
                 return "Intermediate";
-        else if (prop.equals(rl.getString("profile.listJobInterests.health")))
+            else if (prop.equals(rl.getString("profile.listJobInterests.health")))
                 return "Health";
-        else if (prop.equals(rl.getString("profile.listJobInterests.tourism")))
+            else if (prop.equals(rl.getString("profile.listJobInterests.tourism")))
                 return "Tourism and Hospitality";
-        else if (prop.equals(rl.getString("profile.listJobInterests.science")))
+            else if (prop.equals(rl.getString("profile.listJobInterests.science")))
                 return "Science and Technology";
-        else if (prop.equals(rl.getString("profile.listJobInterests.business")))
+            else if (prop.equals(rl.getString("profile.listJobInterests.business")))
                 return "Business and Professional Language";
-        else if (prop.equals(rl.getString("profile.gender.male")))
+            else if (prop.equals(rl.getString("profile.gender.male")))
                 return "Male";
-        else if (prop.equals(rl.getString("profile.gender.female")))
+            else if (prop.equals(rl.getString("profile.gender.female")))
                 return "Female";
-        else if (prop.equals(rl.getString("profile.educationLevel.no")))
+            else if (prop.equals(rl.getString("profile.educationLevel.no")))
                 return "No Formal Education";
-        else if (prop.equals(rl.getString("profile.educationLevel.primary")))
+            else if (prop.equals(rl.getString("profile.educationLevel.primary")))
                 return "Primary";
-        else if (prop.equals(rl.getString("profile.educationLevel.secondary")))
+            else if (prop.equals(rl.getString("profile.educationLevel.secondary")))
                 return "Secondary";
-        else if (prop.equals(rl.getString("profile.educationLevel.bachelor")))
+            else if (prop.equals(rl.getString("profile.educationLevel.bachelor")))
                 return "Bachelor";
-        else if (prop.equals(rl.getString("profile.educationLevel.master")))
+            else if (prop.equals(rl.getString("profile.educationLevel.master")))
                 return "Master";
-        else if (prop.equals(rl.getString("profile.educationLevel.phd")))
+            else if (prop.equals(rl.getString("profile.educationLevel.phd")))
                 return "PhD";
-        else if (prop.equals(rl.getString("profile.currentOccupation.unemployed")))
+            else if (prop.equals(rl.getString("profile.currentOccupation.unemployed")))
                 return "Unemployed";
-        else if (prop.equals(rl.getString("profile.occupation.public")))
+            else if (prop.equals(rl.getString("profile.occupation.public")))
                 return "Public Sector";
-        else if (prop.equals(rl.getString("profile.occupation.private")))
+            else if (prop.equals(rl.getString("profile.occupation.private")))
                 return "Private Sector";
-        else if (prop.equals(rl.getString("profile.occupation.freelancer")))
+            else if (prop.equals(rl.getString("profile.occupation.freelancer")))
                 return "Freelancer";
-        else if (prop.equals(rl.getString("profile.occupation.student")))
+            else if (prop.equals(rl.getString("profile.occupation.student")))
                 return "Student";
-        else if (prop.equals(rl.getString("profile.instructionLanguage.english")))
+            else if (prop.equals(rl.getString("profile.instructionLanguage.english")))
                 return "English";
-        else if (prop.equals(rl.getString("profile.instructionLanguage.german")))
+            else if (prop.equals(rl.getString("profile.instructionLanguage.german")))
                 return "German";
-        else if (prop.equals(rl.getString("profile.instructionLanguage.spanish")))
+            else if (prop.equals(rl.getString("profile.instructionLanguage.spanish")))
                 return "Spanish";
-        else if (prop.equals(rl.getString("profile.instructionLanguage.arabic")))
+            else if (prop.equals(rl.getString("profile.instructionLanguage.arabic")))
                 return "Arabic";
-        else if (prop.equals(""))
-            return "";
+            else if (prop.equals(rl.getString("profile.instructionLanguage.kurdish")))
+                return "Kurdish";
+            else if (prop.equals(""))
+                return "";
+            else
+                return "";
+        }
         else
-                return "UNKNOWN PROPERTY";
+            return "";
 
     }
 
@@ -569,6 +577,8 @@ public class ProfilePage extends BasePage {
                 return "profile.instructionLanguage.spanish";
             case "Arabic":
                 return "profile.instructionLanguage.arabic";
+            case "Kurdish":
+                return "profile.instructionLanguage.kurdish";
             case "":
                 return"";
             default:
